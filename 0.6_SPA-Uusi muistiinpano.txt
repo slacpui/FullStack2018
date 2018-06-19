@@ -1,0 +1,28 @@
+﻿title SPA-Uusi muistiinpano
+Käyttäjä -> Selain:
+
+note left of Selain
+Käyttäjä kirjoittaa muistiinpanon
+ja klikkaa Talleta -nappia. Napin klikkaaminen
+käynnistää sivun uudelleenlataamisen, joka
+puolestaan aktivoi Javascriptin metodin window.onload.
+end note
+
+Selain -> Palvelin: POST https://fullstack-exampleapp.herokuapp.com/new_note_spa
+note right of Selain
+Selain lähettää uuden muistiinpanon
+palvelimelle JSON-muodossa.
+end note
+
+note right of Palvelin
+Palvelin luo käyttäjän lisäämää muistiinpanoa 
+vastaavan olion, joka lisätään notes -taulukkoon.
+end note
+
+Palvelin -> Selain: status 201, created
+
+note left of Selain
+Javascriptin metodi redrawNotes manipuloi selaimen 
+rakentamaan HTML-sivulle uuden listan, jolla 
+näkyy myös käyttäjän lisäämä muistiinpano.
+end note
