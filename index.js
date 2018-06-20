@@ -1,40 +1,56 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const Hello = (props) => {
+const Otsikko = (props) => {
     return (
         <div>
-            <p>Hello {props.name}, you are {props.age} years old.</p>
+            <h1>{props.name}</h1>
         </div>
     )
 }
 
-const HelloTimeCalc = () => {
-    const now = new Date()
-    const a = 10
-    const b = 20
+const Osa = (props) => {
     return (
-    <div>
-        <p>Hello world, it is {now.toString()}</p>
-        <p>{a} plus {b} is {a + b}</p>
-    </div>
+        <p>{props.osa} {props.tehtavia}</p>
+    )
+}
+
+const Sisalto = (props) => {
+    return (
+        <div>
+            <Osa osa={props.valitaOsa1} tehtavia={props.valitaTehtavat1}/>
+            <Osa osa={props.valitaOsa2} tehtavia={props.valitaTehtavat2}/>
+            <Osa osa={props.valitaOsa3} tehtavia={props.valitaTehtavat3}/>
+        </div>
+    )
+}
+
+const Yhteensa = (props) => {
+    return (
+        <div>
+            <p>Yhteensä {props.tehtavia1 + props.tehtavia2 + props.tehtavia3} tehtävää</p>
+        </div>
     )
 }
 
 const App = () => {
-    const nimi = "Pekka"
-    const ika = 10
+    const kurssi = 'Half Stack -sovelluskehitys'
+    const osa1 = 'Reactin perusteet'
+    const tehtavia1 = 10
+    const osa2 = 'Tiedonvälitys propseilla'
+    const tehtavia2 = 7
+    const osa3 = 'Komponenttien tila'
+    const tehtavia3 = 14
+
     return (
         <div>
-            <h1>Greetings</h1>
-            <Hello name="Arto" age={26 + 10}/>
-            <Hello name={nimi} age={ika}/>
-            <br />
-            <HelloTimeCalc />
-            <Hello />
+            <Otsikko name={kurssi} />
+            <Sisalto valitaOsa1={osa1} valitaTehtavat1={tehtavia1} valitaOsa2={osa2} valitaTehtavat2={tehtavia2} valitaOsa3={osa3} valitaTehtavat3={tehtavia3}/>
+            <Yhteensa tehtavia1={tehtavia1} tehtavia2={tehtavia2} tehtavia3={tehtavia3}/>
         </div>
     )
 }
-    
+
+
 ReactDOM.render(<App />, document.getElementById('root'));
 
