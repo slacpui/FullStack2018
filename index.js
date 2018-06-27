@@ -5,13 +5,6 @@ class App extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-//            arr: [
-//                { name: 'hyva', value: 0 },
-//                { name: 'normaali', value: 0 },
-//                { name: 'huono', value: 0 },
-//                { name: 'summa', value: 0 },
-//            ]
-
             'hyva': 0,
             'neutraali': 0,
             'huono': 0,
