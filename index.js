@@ -5,30 +5,23 @@ class App extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            hyva: 0,
-            neutraali: 0,
-            huono: 0,
-            summa: 0
+//            arr: [
+//                { name: 'hyva', value: 0 },
+//                { name: 'normaali', value: 0 },
+//                { name: 'huono', value: 0 },
+//                { name: 'summa', value: 0 },
+//            ]
+
+            'hyva': 0,
+            'neutraali': 0,
+            'huono': 0,
         }
     }
-    
-
-    lisaaHyva = () => this.setState(
-        {
-            hyva: this.state.hyva + 1,
-            summa: this.state.summa + 1
-        })
-    lisaaNeutraali = () => this.setState({neutraali: this.state.neutraali + 1})
-    lisaaHuono = () => this.setState(
-        {
-            huono: this.state.huono + 1,
-            summa: this.state.summa - 1
-        })
-
 
     render() {
         const Button = ({handleClick, text}) => (
-            <button onClick={handleClick}>
+            <button 
+                onClick={handleClick}>
                 {text}
             </button>
         )
@@ -36,15 +29,35 @@ class App extends React.Component {
         const Statistic = ({tilasto}) => <a>{tilasto}</a>
 
         const Statistics = () => {
+            if (this.state.hyva === 0 && this.state.neutraali === 0 && this.state.huono === 0) {
+                return (
+                    <div>
+                        Ei yhtään palautetta annettu.
+                    </div>
+                )
+            }
             return (
             <div>
-                <p>
-                    Hyvä: <Statistic tilasto={this.state.hyva}/> <br />
-                    Neutraali: <Statistic tilasto={this.state.neutraali}/><br />
-                    Huono: <Statistic tilasto={this.state.huono}/><br />
-                    Keskiarvo: <Statistic tilasto={keskiarvo()}/><br />
-                    Positiivisia: <Statistic tilasto={positiiviset()}/> %
-                </p>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>Hyvä: <Statistic tilasto={this.state.hyva}/> </td>
+                        </tr>
+                        <tr>
+                            <td>Neutraali: <Statistic tilasto={this.state.neutraali}/></td>
+                        </tr>
+                        <tr>
+                            <td>Huono: <Statistic tilasto={this.state.huono}/></td>
+                        </tr>
+                        <tr>
+                            <td>Keskiarvo: <Statistic tilasto={keskiarvo()}/></td>
+                        </tr>
+                        <tr>
+                            <td>Positiivisia: <Statistic tilasto={positiiviset()}/> %</td>
+                        </tr>
+                    </tbody>
+                    
+                </table>
             </div>
             )
         }
@@ -53,7 +66,7 @@ class App extends React.Component {
             if (this.state.hyva + this.state.neutraali + this.state.huono === 0) {
                 return 0
             } 
-            return (this.state.summa / (this.state.hyva + this.state.neutraali + this.state.huono)).toFixed(1)   
+            return ((this.state.hyva - this.state.huono) / (this.state.hyva + this.state.neutraali + this.state.huono)).toFixed(1)   
         }
 
         const positiiviset = () => {
@@ -62,28 +75,36 @@ class App extends React.Component {
             }
             return (this.state.hyva / (this.state.hyva + this.state.neutraali + this.state.huono) * 100).toFixed(1);
         }
-            
-        
+
+        const handlechange = (name) => () => {
+            if (name === 'hyva') {
+                this.setState({hyva: (this.state.hyva + 1)})      
+            } else if (name === 'neutraali') {
+                this.setState({neutraali: (this.state.neutraali + 1)})
+            } else if (name === 'huono') {
+                this.setState({huono: (this.state.huono + 1)})
+            }
+
+        }
+
         return (
             <div>
-                <h1>Tehtävä 1.6 - 1.14</h1>
+                <h1>Tehtävä 1.6 - 1.11</h1>
                 <h2>Mitä mieltä olet Unicafen palvelusta tänään?</h2>
                 <div>
                     <Button 
-                        handleClick={this.lisaaHyva}
+                        handleClick={handlechange('hyva')}
                         text={'Hyvä'}
                         
                     />
                     <Button 
-                        handleClick={this.lisaaNeutraali}
+                        handleClick={handlechange('neutraali')}
                         text={'Neutraali'}
-                        palautteita={this.state.palautteita + 1}
                     />
                     <Button 
-                        handleClick={this.lisaaHuono}
+                        handleClick={handlechange('huono')}
                         text={'Huono'}
                         summa={this.state.summa - 1}
-                        palautteita={this.state.palautteita + 1}
                     />
                 </div>
                 <h2>Statistiikka</h2>
